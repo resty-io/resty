@@ -25,6 +25,15 @@ allprojects {
 }
 
 publishing {
+    repositories {
+        maven("https://maven.pkg.github.com/resty-io/resty") {
+            name = "github"
+            credentials {
+                username = project.findProperty("gpr.user") as? String
+                password = project.findProperty("gpr.token") as? String
+            }
+        }
+    }
     publications {
         project.subprojects.forEach { project ->
             publications.create<MavenPublication>(project.name) {
