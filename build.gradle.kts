@@ -29,8 +29,8 @@ publishing {
         maven("https://maven.pkg.github.com/resty-io/resty") {
             name = "github"
             credentials {
-                username = project.findProperty("gpr.user") as? String
-                password = project.findProperty("gpr.token") as? String
+                username = System.getenv("GPR_ACTOR")
+                password = System.getenv("GPR_TOKEN")
             }
         }
     }
