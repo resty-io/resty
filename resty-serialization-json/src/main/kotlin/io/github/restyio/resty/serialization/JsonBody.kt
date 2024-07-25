@@ -7,6 +7,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 
-class JsonBody(json: JsonElement) : RawBody by RawBodyEnvelope(
-    lazy { Json.encodeToString(json).toByteArray().toRawBody() }::value,
-)
+class JsonBody(json: JsonElement) :
+    RawBody by RawBodyEnvelope(
+        lazy { Json.encodeToString(json).toByteArray().toRawBody() }::value,
+    )

@@ -26,9 +26,7 @@ interface Header : Iterable<CharSequence> {
 /**
  * @since 0.1
  */
-class PreparedHeader(
-    private val map: Map<CharSequence, Iterable<CharSequence>>,
-) : Header {
+class PreparedHeader(private val map: Map<CharSequence, Iterable<CharSequence>>) : Header {
     override fun field(name: CharSequence): Iterator<CharSequence> {
         return (this.map[name] ?: emptyList()).iterator()
     }
@@ -71,10 +69,7 @@ class ExtendedHeader(
     }
 }
 
-class FilteredHeader(
-    private val origin: Header,
-    private val field: CharSequence,
-) : Header {
+class FilteredHeader(private val origin: Header, private val field: CharSequence) : Header {
     override fun field(name: CharSequence): Iterator<CharSequence> {
         if (name == this.field) {
             return emptyArray<CharSequence>().iterator()
@@ -118,39 +113,36 @@ abstract class Field(value: CharSequence) : CharSequence by value {
     object ContentLength : Field("Content-Length")
 }
 
-class Authorization(
-    kind: CharSequence,
-    credential: () -> CharSequence,
-) : CharSequence by CharSequenceEnvelope(
-    {
-        buildString {
-            append(kind)
-            append(" ")
-            append(credential())
-        }
-    },
-) {
-    class Basic(
-        username: CharSequence,
-        password: CharSequence,
-    ) : CharSequence by Authorization(
-        "Basic",
+class Authorization(kind: CharSequence, credential: () -> CharSequence) :
+    CharSequence by CharSequenceEnvelope(
         {
-            Base64
-                .getEncoder()
-                .encodeToString(
-                    buildString {
-                        this.append(username)
-                        this.append(":")
-                        this.append(password)
-                    }.encodeToByteArray(),
-                )
+            buildString {
+                append(kind)
+                append(" ")
+                append(credential())
+            }
         },
-    )
+    ) {
+    class Basic(username: CharSequence, password: CharSequence) :
+        CharSequence by Authorization(
+            "Basic",
+            {
+                Base64
+                    .getEncoder()
+                    .encodeToString(
+                        buildString {
+                            this.append(username)
+                            this.append(":")
+                            this.append(password)
+                        }.encodeToByteArray(),
+                    )
+            },
+        )
 
-    class Bearer(token: CharSequence) : CharSequence by Authorization("Bearer", {
-        token
-    })
+    class Bearer(token: CharSequence) :
+        CharSequence by Authorization("Bearer", {
+            token
+        })
 }
 
 fun Header.with(field: CharSequence, value: Iterable<CharSequence>): Header {

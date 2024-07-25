@@ -10,6 +10,6 @@ class SerializedJsonRequestMessage<out B>(
     origin: RequestMessage<B>,
     strategy: SerializationStrategy<B>,
 ) : RequestMessage<JsonElement> by MappedRequestMessage(
-    origin,
-    { body -> Json.encodeToJsonElement(strategy, body) },
-)
+        origin,
+        { body -> Json.encodeToJsonElement(strategy, body) },
+    )

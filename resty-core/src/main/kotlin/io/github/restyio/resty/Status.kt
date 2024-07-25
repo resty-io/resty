@@ -1,6 +1,8 @@
 package io.github.restyio.resty
 
-abstract class Status(private val code: Number) : Number(), Comparable<Number> {
+abstract class Status(private val code: Number) :
+    Number(),
+    Comparable<Number> {
     override fun toByte(): Byte {
         return this.code.toByte()
     }

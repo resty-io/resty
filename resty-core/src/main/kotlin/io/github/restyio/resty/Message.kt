@@ -23,10 +23,8 @@ interface Message<out B> {
     suspend fun body(): B
 }
 
-class PreparedMessage<out B>(
-    private val header: () -> Header,
-    private val body: suspend () -> B,
-) : Message<B> {
+class PreparedMessage<out B>(private val header: () -> Header, private val body: suspend () -> B) :
+    Message<B> {
     constructor(
         origin: Message<B>,
         header: () -> Header = origin::header,

@@ -10,6 +10,6 @@ class DeserializedJsonResponseMessage<out B>(
     origin: ResponseMessage<JsonElement>,
     strategy: DeserializationStrategy<B>,
 ) : ResponseMessage<B> by MappedResponseMessage(
-    origin,
-    { body -> Json.decodeFromJsonElement(strategy, body) },
-)
+        origin,
+        { body -> Json.decodeFromJsonElement(strategy, body) },
+    )

@@ -85,13 +85,13 @@ fun <A, B, C> ResponseMiddleware<A, B>.then(
 fun <A, B> Middleware<
     RequestMessage<A>,
     RequestMessage<B>,
-    >.toRequestMiddleware(): RequestMiddleware<A, B> {
+>.toRequestMiddleware(): RequestMiddleware<A, B> {
     return RequestMiddleware { this.apply(it) }
 }
 
 fun <A, B> Middleware<
     ResponseMessage<A>,
     ResponseMessage<B>,
-    >.toResponseMiddleware(): ResponseMiddleware<A, B> {
+>.toResponseMiddleware(): ResponseMiddleware<A, B> {
     return ResponseMiddleware { this.apply(it) }
 }

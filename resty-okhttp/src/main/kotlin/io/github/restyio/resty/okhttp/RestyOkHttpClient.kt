@@ -130,7 +130,9 @@ private class OkHttpResponseHeader(private val response: okhttp3.Response) : Hea
     }
 
     override fun iterator(): Iterator<CharSequence> {
-        return this.response.headers.names().iterator()
+        return this.response.headers
+            .names()
+            .iterator()
     }
 }
 
@@ -182,7 +184,8 @@ private suspend fun RequestMessage<RawBody>.buildRequest(
     port: Int,
     secure: Boolean,
 ): okhttp3.Request {
-    return okhttp3.Request.Builder()
+    return okhttp3.Request
+        .Builder()
         .url(
             URL(
                 if (secure) "https" else "http",
@@ -190,9 +193,9 @@ private suspend fun RequestMessage<RawBody>.buildRequest(
                 port,
                 this.location().buildString(),
             ),
-        )
-        .apply {
-            this@buildRequest.method()
+        ).apply {
+            this@buildRequest
+                .method()
                 .let { method ->
                     this.method(
                         method.buildString(),
@@ -205,13 +208,11 @@ private suspend fun RequestMessage<RawBody>.buildRequest(
                         },
                     )
                 }
-        }
-        .apply {
+        }.apply {
             for (field in this@buildRequest.header()) {
                 for (value in this@buildRequest.header().field(field)) {
                     addHeader(field.buildString(), value.buildString())
                 }
             }
-        }
-        .build()
+        }.build()
 }
