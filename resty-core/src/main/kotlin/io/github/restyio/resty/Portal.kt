@@ -82,16 +82,12 @@ fun <A, B, C> ResponseMiddleware<A, B>.then(
     return MiddlewarePipeline(this, next).toResponseMiddleware()
 }
 
-fun <A, B> Middleware<
-    RequestMessage<A>,
-    RequestMessage<B>,
->.toRequestMiddleware(): RequestMiddleware<A, B> {
+@Suppress("ktlint:standard:max-line-length")
+fun <A, B> Middleware<RequestMessage<A>, RequestMessage<B>>.toRequestMiddleware(): RequestMiddleware<A, B> {
     return RequestMiddleware { this.apply(it) }
 }
 
-fun <A, B> Middleware<
-    ResponseMessage<A>,
-    ResponseMessage<B>,
->.toResponseMiddleware(): ResponseMiddleware<A, B> {
+@Suppress("ktlint:standard:max-line-length")
+fun <A, B> Middleware<ResponseMessage<A>, ResponseMessage<B>>.toResponseMiddleware(): ResponseMiddleware<A, B> {
     return ResponseMiddleware { this.apply(it) }
 }
