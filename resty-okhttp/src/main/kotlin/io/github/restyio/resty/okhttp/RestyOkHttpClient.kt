@@ -126,7 +126,7 @@ private class OkHttpResponseBody(
 
 private class OkHttpResponseHeader(private val response: okhttp3.Response) : Header {
     override fun field(name: CharSequence): Iterator<CharSequence> {
-        return this.response.headers(name.toString()).iterator()
+        return this.response.headers(name.buildString()).iterator()
     }
 
     override fun iterator(): Iterator<CharSequence> {
