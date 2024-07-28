@@ -79,7 +79,7 @@ private class OkHttpResponseMessage(
     private val response: okhttp3.Response,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ResponseMessage<RawBody> {
-    override fun status(): Int {
+    override fun status(): Number {
         return this.response.code
     }
 
