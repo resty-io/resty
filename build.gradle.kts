@@ -37,11 +37,11 @@ publishing {
     publications {
         project.subprojects.forEach { project ->
             publications.create<MavenPublication>(project.name) {
-                from(components["java"])
-
                 groupId = project.group.toString()
                 artifactId = project.name
                 version = project.version.toString()
+
+                from(project.components["java"])
             }
         }
     }
